@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM `deproject36.trips_data_all.materialized_table_green_taxi_data`
