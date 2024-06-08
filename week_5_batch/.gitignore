@@ -1,2 +1,6 @@
 fhvhv
 *.csv
+.ipynb_checkpoints
+data
+lib
+spark-warehouse
