@@ -20,10 +20,10 @@ PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 
 homework_workflow =  DAG(
-    "DataIngestionHW",
+    "DataIngestionHW2",
     schedule_interval="0 0 1 * *",
     start_date = datetime(2019, 1, 1),
-    end_date = datetime(2019, 12, 30)
+    end_date = datetime(2019, 12, 31)
 )
 
 airflow_home = os.environ.get("airflow_home", "/opt/airflow/")
@@ -87,10 +87,10 @@ with homework_workflow:
     )
     
     # OPTIONAL: remove_files_task
-    # remove_files_task = BashOperator(
-    #     task_id="remove_files_task",
-    #     bash_command=f"rm {airflow_home}/{dataset_file} {airflow_home}/{parquet_file}" 
-    # )
+    remove_files_task = BashOperator(
+        task_id="remove_files_task",
+        bash_command=f"rm {airflow_home}/{dataset_file} {airflow_home}/{parquet_file}" 
+    )
 
 
-    download_dataset_task >> format_to_parquet_task >> local_to_gcs_task
+    download_dataset_task >> format_to_parquet_task >> local_to_gcs_task >> remove_files_task
